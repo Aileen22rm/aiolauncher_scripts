@@ -1,0 +1,34 @@
+-- name = "Map"
+-- description = "Search in map app"
+-- data_source = "internal"
+-- type = "search"
+-- author = "Aileenrm"
+-- version = "1.0"
+-- prefix = "map"
+
+text_from = ""
+text_to = ""
+yt_intent_action = "android.intent.action.VIEW"
+yt_intent_category = "android.intent.category.DEFAULT"
+yt_package_name = "com.google.android.apps.maps"
+
+local md_color = require "md_colors"
+local red = md_colors.red_800
+
+function on_search(input)
+    text_from = input
+    text_to = ""
+    search:show({input},{red})
+end
+
+function on_click(idx)
+    intent:start_activity{
+        action = map_intent_action,
+        category = map_intent_category,
+        package = map_package_name,
+        extras = {
+            query=text_from
+        }
+    }
+end
+
